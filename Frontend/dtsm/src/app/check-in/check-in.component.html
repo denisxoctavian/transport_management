@@ -1,0 +1,16 @@
+<form [formGroup]="locationForm">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <mat-form-field style="margin-top: 100px;" appearance="fill">
+      <mat-label>Transport</mat-label>
+      <mat-select formControlName="transport">
+        <mat-option *ngFor="let transport of transports" [value]="transport">TRANS: {{transport.id}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px;">
+      <button [disabled]="isErrorShowing()" (click)="completeTransport()" mat-raised-button color="primary"
+        style="margin-right: 5px;width: 60%;"><b>Completed</b></button>
+      <button [disabled]="isErrorShowing()" mat-raised-button color="warn"><b>Remove</b></button>
+    </div>
+  </div>
+</form>

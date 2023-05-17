@@ -1,0 +1,36 @@
+.example-stepper {
+  margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+.demo-inline-calendar-card {
+  width: 205px;
+}
+
+.selected-hours {
+  display: inline-block;
+  padding: 8px;
+  text-align: center;
+  width: 50px;
+  margin-top: 3px;
+  border-radius: 8px;
+  background-color: rgb(233, 231, 231);
+  color: rgb(0, 0, 0);
+}
+
+.selected-hours:hover {
+  background-color: rgb(203, 203, 203);
+}
+
+
+.selected {
+  color: white;
+  background-color: #026d79;
+}
+
+.selected:hover {
+  background-color: #02525b;
+}

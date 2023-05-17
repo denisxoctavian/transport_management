@@ -1,0 +1,21 @@
+<form [formGroup]="locationForm">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <mat-form-field style="margin-top: 100px;" appearance="fill">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location">
+        <mat-option *ngFor="let location of locations" [value]="location">{{location.address}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Gate</mat-label>
+      <input matInput formControlName="gate">
+      <mat-error *ngIf="locationForm.controls['gate'].hasError('required')">Gate is required</mat-error>
+      <mat-error *ngIf="locationForm.controls['gate'].hasError('pattern')">Invalid gate format</mat-error>
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px;">
+      <button [disabled]="isErrorShowing()" (click)="addGate()" mat-raised-button color="primary"
+        style="margin-right: 5px;width: 60%;"><b>Add</b></button>
+      <button [disabled]="isErrorShowing()" mat-raised-button color="warn" (click)="deleteGate()"><b>Remove</b></button>
+    </div>
+  </div>
+</form>

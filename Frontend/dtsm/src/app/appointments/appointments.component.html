@@ -1,0 +1,68 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <div style="width: 85vw">
+      <mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[4,5]" style="margin-top: 150px;" class="table-container mat-elevation-z8" matSort aria-label="TestDataSource"
+        [class.isMobile]="isMobile" [dataSource]="dataSource" id="print">
+
+        <ng-container matColumnDef="transportSchedule.idGate.id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            GATE
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ng-container *ngIf="row.transportSchedule.idGate">
+              {{ row.transportSchedule.idGate.id }}
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="transport.id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">TRANSPORT</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.transport.id }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transportSchedule.arrivalTime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">ARRIVAL TIME</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.transportSchedule.arrivalTime }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transport.deliveryDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">DELIVERY <BR>DATE</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ formatDate(row.transport.deliveryDate) }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accept">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">CLICK TO <BR>ACCEPT</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-icon style="color: green;" (click)="acceptAppointment(row)">check</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="decline">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">CLICK TO <BR>DECLINE</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-icon style="color: red;" (click)="declineAppointment(row)">close</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <div class="mat-paginator-container">
+        <mat-paginator #paginator [length]="dataSource?.data?.length" hidePageSize="true" [pageIndex]="0" [pageSize]="5"
+          aria-label="Select page">
+        </mat-paginator>
+        <p style="text-align: center; font-size: 10px; color: rgb(197, 196, 196);">The page displays a table with your
+          location appointments, with columns showing information such as gate, transport </p>
+      </div>
+    </div>
+    <button id="add-button" (click)="exportData()" mat-raised-button
+      color="primary"><b>Export</b></button>
+  </div>
+</div>

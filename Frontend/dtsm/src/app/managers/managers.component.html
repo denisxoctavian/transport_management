@@ -1,0 +1,69 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <div style="width: 85vw">
+      <div class="search-bar" fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+      </div>
+      <mat-table class="table-container mat-elevation-z8" matSort aria-label="TestDataSource"
+        [class.isMobile]="isMobile">
+        <ng-container matColumnDef="select">
+          <mat-header-cell *matHeaderCellDef class="w-50" class="select-column">
+          </mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row" class="select-column">
+            <span class="mobile-label"></span>
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)" color="primary">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">LAST <br>NAME</mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row">{{ row.firstName }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">FIRST <br>NAME</mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row">{{ row.lastName }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phoneNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            PHONE
+          </mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row"><span class="mobile-label"></span>{{
+            row.phoneNumber }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            EMAIL
+          </mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row"><span class="mobile-label"></span>{{ row.email
+            }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            LOCATION
+          </mat-header-cell>
+          <mat-cell (click)="openSelection(row)" *matCellDef="let row"><span class="mobile-label"></span>{{
+            row.idLocation?.address }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <div class="mat-paginator-container">
+        <mat-paginator #paginator [length]="dataSource?.data?.length" hidePageSize="true" [pageIndex]="0" [pageSize]="5"
+          aria-label="Select page">
+        </mat-paginator>
+      </div>
+    </div>
+    <button id="add-button" [disabled]="!selection.isEmpty()" (click)="openSelection('addOperation')" mat-raised-button
+      color="primary"><b>Add</b></button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" role="heading">
+  <button mat-icon-button (click)="clickMenu()">
+    <mat-icon >menu</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
+  <img style="width: 100px;" src="../../../../assets/imgs/logo_center.png">
+  <span class="example-spacer"></span>
+  <button mat-icon-button (click)="openDialog()" matTooltip="Click here to view your account"  [matTooltipPosition]='below'>
+    <mat-icon >person</mat-icon>
+  </button>
+  <button mat-icon-button (click)="openDialogHelp()" matTooltip="Click here for help page"  [matTooltipPosition]='below'>
+    <mat-icon>help</mat-icon>
+  </button>
+</mat-toolbar>

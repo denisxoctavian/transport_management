@@ -1,0 +1,60 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-stepper style="margin-top: 150px;" class="example-stepper" [orientation]="(stepperOrientation | async)!">
+    <mat-step [stepControl]="firstFormGroup" label="Fill out your transport information" [editable]="true">
+      <form [formGroup]="firstFormGroup">
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <mat-form-field appearance="fill">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="selectedLocation" (selectionChange)="getGatesOfLocation($event.value.id)">
+              <mat-option *ngFor="let location of locations" [value]="location">{{location.address}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Gate</mat-label>
+            <mat-select [disabled]="noLocationSelected" formControlName="selectedGate">
+              <mat-option *ngFor="let gate of gates" [value]="gate">{{gate.id}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button [disabled]="isErrorShowing()" (click)="createTransport()" style="margin-top: 5px;" mat-raised-button
+            color="primary" matStepperNext matTooltip="Click here to go to the next step">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Fill out appointment information" [editable]="true">
+      <form [formGroup]="secondFormGroup">
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <mat-card style="margin-top: 1px;" class="demo-inline-calendar-card">
+            <mat-calendar [(selected)]="selected" [minDate]="minDate" [maxDate]="maxDate"
+              (selectedChange)="onDateSelection()"></mat-calendar>
+          </mat-card>
+          <h5>Available Hours for {{ selected | date }}</h5>
+          <div style="width: 510px; margin-left: 80px;">
+            <div fxLayout="row wrap" fxLayoutGap="23px" fxLayoutAlign="start center">
+              <div fxFlex.gt-sm="10" fxFlex.lt-md="25" fxFlex.lt-sm="15" fxFlex="calc(100% / 5 - 2%)"
+                *ngFor="let hour of availableHours">
+                <label>
+                  <span class="selected-hours" [ngClass]="{'selected': selectedHour === hour}"
+                    (click)="selectHour(hour)">{{hour}}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <p style="text-align: center; font-size: 10px; color: rgb(197, 196, 196);">After completing this step, your
+            appointment will be sent to the location manager. <br> You will receive an email when he confirms your
+            appointment.</p>
+          <button mat-raised-button color="primary" [disabled]="!selectedHour" matStepperNext
+            (click)="makeAppoiment();" matTooltip="Click here to complete the appointment">Complete</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup" label="Print out your appointment" [editable]="true">
+      <form [formGroup]="thirdFormGroup">
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <p style="text-align: center; font-size: 10px; color: rgb(197, 196, 196);">Press the button below to print
+            your appointment.<br> You will need this appointment when you will arrive at the gate of the location</p>
+          <button mat-raised-button color="primary" (click)="printAndGo()" matTooltip="Click here to print and go to transports">Print</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

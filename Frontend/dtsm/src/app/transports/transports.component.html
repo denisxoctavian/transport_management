@@ -1,0 +1,74 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <div style="width: 85vw">
+      <mat-table style="margin-top: 150px;" class="table-container mat-elevation-z8" matSort aria-label="TestDataSource"
+        [class.isMobile]="isMobile" [dataSource]="dataSource">
+
+        <ng-container matColumnDef="transport.deliveryDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            DELIVERY<br>DATE
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ng-container *ngIf="row.transport.deliveryDate">
+              {{ formatDateDelivery(row.transport.deliveryDate) }}
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transportSchedule.arrivalTime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            ARRIVAL<br>TIME
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" ><span class="mobile-label"></span>
+            {{row.transportSchedule.arrivalTime}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transport.shippingDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">SHIPPING<br>DATE</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ formatDateShipping(row.transport.shippingDate) }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="location.address">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            ADDRESS
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"><span class="mobile-label"></span>{{ row.location.address }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transport.status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            STATUS<br>TRANSPORT
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngStyle]="{
+            color: row.transport.status === '0' ? 'red' : row.transport.status === '1' ? 'blue' : 'green'
+          }"><span class="mobile-label"></span>{{ row.transport.status === '0' ? 'Pending' : row.transport.status ===
+            '1' ? 'In Transit' : 'Done' }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transportSchedule.status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-50">
+            STATUS<br>APPOIMENT
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngStyle]="{
+            color: row.transportSchedule.status === 0 ? 'red' : row.transportSchedule.status === 1 ? 'green' : '#f7ea3f'
+          }"><span class="mobile-label"></span>{{ row.transportSchedule.status === 0 ? 'Waiting Approval' :
+            row.transportSchedule.status === 1 ? 'Approved' : '' }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <div class="mat-paginator-container">
+        <mat-paginator #paginator [length]="dataSource?.data?.length" hidePageSize="true" [pageIndex]="0" [pageSize]="5"
+          aria-label="Select page">
+        </mat-paginator>
+        <p style="text-align: center; font-size: 10px; color: rgb(197, 196, 196);">The page displays a table with your
+          transports, with columns showing information such as delivery date, shipping date, address, and transport
+          status. </p>
+      </div>
+    </div>
+  </div>
+</div>

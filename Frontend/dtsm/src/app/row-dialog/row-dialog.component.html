@@ -1,0 +1,59 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-title
+    style="margin-top:15px;text-align: center; font-size: 20px; color: #189999"><b>{{title}}</b></mat-card-title>
+  <mat-card-content fxFlexAlign="space-around center">
+    <div fxLayout="column" fxLayoutAlign="space-between center" class="form">
+      <form [formGroup]="userForm">
+        <div style="display: none;">
+          <input formControlName="id" />
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput />
+          <mat-error *ngIf="userForm.controls['lastName'].hasError('required')">Last Name is required</mat-error>
+          <mat-error *ngIf="userForm.controls['lastName'].hasError('pattern')">Invalid last name format</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstName" matInput />
+          <mat-error *ngIf="userForm.controls['firstName'].hasError('required')">First Name is required</mat-error>
+          <mat-error *ngIf="userForm.controls['lastName'].hasError('pattern')">Invalid first name format</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input formControlName="phoneNumber" matInput />
+          <mat-error *ngIf="userForm.controls['phoneNumber'].hasError('required')">Phone is required</mat-error>
+          <mat-error *ngIf="userForm.controls['phoneNumber'].hasError('pattern')">Invalid phone number
+            format</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput />
+          <mat-error *ngIf="userForm.controls['email'].hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="userForm.controls['email'].hasError('pattern')">Invalid email format</mat-error>
+        </mat-form-field>
+      </form>
+      <ng-container *ngIf="addOperation && title!='DRIVER'">
+        <mat-form-field appearance="fill">
+          <mat-label>Location</mat-label>
+          <mat-select [(ngModel)]="selectedLocation" name="idLocation ">
+            <mat-option *ngFor="let location of locations" [value]="location">{{location.address}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="buttons">
+      <div>
+        <button style="margin-right: 7px;" mat-raised-button color="primary" [disabled]="isErrorShowing()"
+          (click)="addOperation ? (title === 'DRIVER' ? addDriver() : addManager()) : (title === 'DRIVER' ? updateDriver() : updateManager())">
+          <b>{{ addOperation ? 'Add' : 'Update' }}</b>
+        </button>
+        <button *ngIf="!addOperation" mat-raised-button color="warn"
+          (click)="title === 'DRIVER' ? deleteDriver() : deleteManager()"><b>Delete</b></button>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close color="primary" (click)="close()"><b>Cancel</b></button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,16 @@
+mat-sidenav {
+  background-color: #026d79;
+  color: white;
+  width: 200px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+
+  :hover {
+    color: rgb(198, 197, 197);
+
+  }
+}
